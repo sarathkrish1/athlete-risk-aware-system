@@ -17,15 +17,12 @@ interface AthleteCardProps {
 }
 
 const AthleteCard = ({ id, name, position, avatar, riskScore, flagged }: AthleteCardProps) => {
-  let riskColor = 'bg-risk-low';
-  let riskText = 'text-risk-low';
+  let riskColor = 'text-risk-low';
   
   if (riskScore > 65) {
-    riskColor = 'bg-risk-high';
-    riskText = 'text-risk-high';
+    riskColor = 'text-risk-high';
   } else if (riskScore > 30) {
-    riskColor = 'bg-risk-moderate';
-    riskText = 'text-risk-moderate';
+    riskColor = 'text-risk-moderate';
   }
   
   return (
@@ -52,9 +49,12 @@ const AthleteCard = ({ id, name, position, avatar, riskScore, flagged }: Athlete
         <div className="mt-4">
           <div className="flex justify-between items-center mb-1">
             <span className="text-sm">Risk Score</span>
-            <span className={`font-medium ${riskText}`}>{riskScore}%</span>
+            <span className={`font-medium ${riskColor}`}>{riskScore}%</span>
           </div>
-          <Progress value={riskScore} className="h-2" indicatorClassName={riskColor} />
+          <Progress 
+            value={riskScore} 
+            className={`h-2 ${riskScore > 65 ? 'bg-risk-high' : riskScore > 30 ? 'bg-risk-moderate' : 'bg-risk-low'}`} 
+          />
         </div>
       </CardContent>
       

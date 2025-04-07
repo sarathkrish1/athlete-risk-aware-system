@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { 
@@ -22,7 +21,6 @@ import RiskCard from '@/components/RiskCard';
 import TrainingLoadChart from '@/components/TrainingLoadChart';
 import RehabSuggestion from '@/components/RehabSuggestion';
 
-// Mock data
 const athleteData = {
   id: '1',
   name: 'John Smith',
@@ -213,7 +211,10 @@ const AthleteProfile = () => {
                     High Risk Level
                   </Badge>
                 </div>
-                <Progress value={athlete.riskScore} className="h-2 mb-6" indicatorClassName="bg-risk-high" />
+                <Progress 
+                  value={athlete.riskScore} 
+                  className={`h-2 mb-6 ${athlete.riskScore > 65 ? 'bg-risk-high' : athlete.riskScore > 30 ? 'bg-risk-moderate' : 'bg-risk-low'}`}
+                />
                 
                 <h4 className="font-medium mb-3">Key Metrics</h4>
                 <div className="space-y-4">

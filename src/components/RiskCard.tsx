@@ -39,7 +39,10 @@ const RiskCard = ({ title, riskLevel, description, bodyPart, className }: RiskCa
         {bodyPart && <p className="text-sm text-muted-foreground">{bodyPart}</p>}
       </CardHeader>
       <CardContent>
-        <Progress value={riskLevel} className="h-2 mt-2" indicatorClassName={riskColor} />
+        <Progress 
+          value={riskLevel} 
+          className={`h-2 mt-2 ${riskColor}`} 
+        />
         {description && (
           <p className="text-sm text-muted-foreground mt-4">{description}</p>
         )}
