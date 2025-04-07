@@ -26,13 +26,13 @@ const athletes = [
 
 const Athletes = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [positionFilter, setPositionFilter] = useState('');
-  const [riskFilter, setRiskFilter] = useState('');
+  const [positionFilter, setPositionFilter] = useState('all');
+  const [riskFilter, setRiskFilter] = useState('all');
 
   // Apply filters
   const filteredAthletes = athletes.filter(athlete => {
     const matchesSearch = athlete.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesPosition = positionFilter === '' || athlete.position === positionFilter;
+    const matchesPosition = positionFilter === 'all' || athlete.position === positionFilter;
     
     let matchesRisk = true;
     if (riskFilter === 'high') {
@@ -74,7 +74,7 @@ const Athletes = () => {
               <SelectValue placeholder="Position" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Positions</SelectItem>
+              <SelectItem value="all">All Positions</SelectItem>
               <SelectItem value="Forward">Forward</SelectItem>
               <SelectItem value="Midfielder">Midfielder</SelectItem>
               <SelectItem value="Defender">Defender</SelectItem>
@@ -89,7 +89,7 @@ const Athletes = () => {
               <SelectValue placeholder="Risk Level" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Risks</SelectItem>
+              <SelectItem value="all">All Risks</SelectItem>
               <SelectItem value="high">High Risk</SelectItem>
               <SelectItem value="medium">Medium Risk</SelectItem>
               <SelectItem value="low">Low Risk</SelectItem>
