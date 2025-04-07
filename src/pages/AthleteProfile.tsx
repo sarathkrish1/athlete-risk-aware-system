@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { 
@@ -19,7 +20,6 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import RiskCard from '@/components/RiskCard';
 import TrainingLoadChart from '@/components/TrainingLoadChart';
-import RehabSuggestion from '@/components/RehabSuggestion';
 
 const athleteData = {
   id: '1',
@@ -39,36 +39,6 @@ const athleteData = {
     agility: 88,
     recovery: 65
   },
-  injuries: [
-    {
-      injury: 'Ankle Sprain',
-      bodyPart: 'Right Ankle',
-      priority: 'high' as const,
-      estimatedRecovery: '2-3 weeks',
-      steps: [
-        {
-          title: 'RICE Protocol',
-          description: 'Rest, ice, compression, and elevation for the first 72 hours',
-          completed: true
-        },
-        {
-          title: 'Range of Motion Exercises',
-          description: 'Gentle ankle circles and stretches to maintain mobility',
-          completed: false
-        },
-        {
-          title: 'Strengthening',
-          description: 'Progressive resistance exercises focusing on ankle stability',
-          completed: false
-        },
-        {
-          title: 'Return to Sport',
-          description: 'Gradual return to sport-specific movements and activities',
-          completed: false
-        }
-      ]
-    }
-  ],
   trainingLoad: [
     { date: 'Feb 1', load: 45 },
     { date: 'Feb 2', load: 55 },
@@ -190,9 +160,8 @@ const AthleteProfile = () => {
       </div>
       
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid grid-cols-3 md:w-auto md:inline-grid">
+        <TabsList className="grid grid-cols-2 md:w-auto md:inline-grid">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="rehab">Rehabilitation</TabsTrigger>
           <TabsTrigger value="history">History</TabsTrigger>
         </TabsList>
         
@@ -250,20 +219,6 @@ const AthleteProfile = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </TabsContent>
-        
-        <TabsContent value="rehab">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {athlete.injuries.map((injury, index) => (
-              <RehabSuggestion key={index} {...injury} />
-            ))}
-            
-            {athlete.injuries.length === 0 && (
-              <div className="col-span-full text-center py-12">
-                <p className="text-muted-foreground">No active rehabilitation plans.</p>
-              </div>
-            )}
           </div>
         </TabsContent>
         
