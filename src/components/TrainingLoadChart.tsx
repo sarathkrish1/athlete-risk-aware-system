@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   BarChart,
@@ -13,6 +13,7 @@ import {
   TooltipProps
 } from 'recharts';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface TrainingData {
   date: string;
@@ -25,6 +26,7 @@ interface TrainingLoadChartProps {
   title: string;
   description?: string;
   className?: string;
+  isLoading?: boolean;
 }
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
@@ -53,14 +55,31 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
   return null;
 };
 
-const TrainingLoadChart = ({ 
+const TrainingLoadChartComponent = ({ 
   data, 
   title, 
   description, 
-  className 
+  className,
+  isLoading = false
 }: TrainingLoadChartProps) => {
   // Find the threshold for the reference line
   const threshold = data.find(item => item.threshold)?.threshold || 80;
+
+  if (isLoading) {
+    return (
+      <Card className={cn(className)}>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-medium">
+            <Skeleton className="h-6 w-48" />
+          </CardTitle>
+          <Skeleton className="h-4 w-64" />
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-[300px] w-full" />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className={cn(className)}>
@@ -100,5 +119,8 @@ const TrainingLoadChart = ({
     </Card>
   );
 };
+
+// Memoize the component to prevent unnecessary re-renders
+const TrainingLoadChart = memo(TrainingLoadChartComponent);
 
 export default TrainingLoadChart;

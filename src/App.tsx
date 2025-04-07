@@ -1,17 +1,46 @@
 
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import Dashboard from "./pages/Dashboard";
-import Athletes from "./pages/Athletes";
-import AthleteProfile from "./pages/AthleteProfile";
-import Analytics from "./pages/Analytics";
-import NotFound from "./pages/NotFound";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const queryClient = new QueryClient();
+// Lazy load pages
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Athletes = lazy(() => import("./pages/Athletes"));
+const AthleteProfile = lazy(() => import("./pages/AthleteProfile"));
+const Analytics = lazy(() => import("./pages/Analytics"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="container py-6">
+    <Skeleton className="h-10 w-48 mb-8" />
+    <div className="grid gap-6 md:grid-cols-4 mb-6">
+      {[...Array(4)].map((_, i) => (
+        <Skeleton key={i} className="h-32 w-full" />
+      ))}
+    </div>
+    <Skeleton className="h-[400px] w-full mb-6" />
+    <div className="grid gap-6 md:grid-cols-2">
+      {[...Array(2)].map((_, i) => (
+        <Skeleton key={i} className="h-64 w-full" />
+      ))}
+    </div>
+  </div>
+);
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -21,13 +50,32 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="athletes" element={<Athletes />} />
-            <Route path="athletes/:id" element={<AthleteProfile />} />
-            <Route path="analytics" element={<Analytics />} />
-            {/* Add more routes here */}
+            <Route index element={
+              <Suspense fallback={<PageLoader />}>
+                <Dashboard />
+              </Suspense>
+            } />
+            <Route path="athletes" element={
+              <Suspense fallback={<PageLoader />}>
+                <Athletes />
+              </Suspense>
+            } />
+            <Route path="athletes/:id" element={
+              <Suspense fallback={<PageLoader />}>
+                <AthleteProfile />
+              </Suspense>
+            } />
+            <Route path="analytics" element={
+              <Suspense fallback={<PageLoader />}>
+                <Analytics />
+              </Suspense>
+            } />
           </Route>
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={
+            <Suspense fallback={<PageLoader />}>
+              <NotFound />
+            </Suspense>
+          } />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

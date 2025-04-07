@@ -1,21 +1,8 @@
 
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer
-} from 'recharts';
+import React, { useState, useEffect } from 'react';
+import InjuryTrendsChart from '@/components/analytics/InjuryTrendsChart';
+import InjuryTypesChart from '@/components/analytics/InjuryTypesChart';
+import BodyPartInjuriesChart from '@/components/analytics/BodyPartInjuriesChart';
 
 // Mock data
 const injuryTrendData = [
@@ -48,92 +35,52 @@ const bodyPartData = [
   { part: 'Neck', count: 6 },
 ];
 
-// Colors for the pie chart
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
-
 const Analytics = () => {
+  const [loading, setLoading] = useState(true);
+  const [trendsData, setTrendsData] = useState([] as typeof injuryTrendData);
+  const [typesData, setTypesData] = useState([] as typeof injuryTypeData);
+  const [bodyPartsData, setBodyPartsData] = useState([] as typeof bodyPartData);
+
+  useEffect(() => {
+    // Simulate data loading with a delay
+    const loadData = async () => {
+      setLoading(true);
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Load data in sequence to improve perceived performance
+      setTrendsData(injuryTrendData);
+      
+      await new Promise(resolve => setTimeout(resolve, 100));
+      setTypesData(injuryTypeData);
+      
+      await new Promise(resolve => setTimeout(resolve, 100));
+      setBodyPartsData(bodyPartData);
+      
+      setLoading(false);
+    };
+    
+    loadData();
+    
+    // Cleanup function
+    return () => {
+      setTrendsData([]);
+      setTypesData([]);
+      setBodyPartsData([]);
+    };
+  }, []);
+
   return (
     <div className="container py-6">
       <h1 className="text-3xl font-bold mb-8">Analytics</h1>
       
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Injury Trends Over Time</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[350px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={injuryTrendData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="count" 
-                    name="Injury Count" 
-                    stroke="#3b82f6" 
-                    activeDot={{ r: 8 }}
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader>
-            <CardTitle>Injury Types</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[350px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={injuryTypeData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {injuryTypeData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value) => `${value}%`} />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+        <InjuryTrendsChart data={trendsData} isLoading={loading} />
+        <InjuryTypesChart data={typesData} isLoading={loading} />
       </div>
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Injuries by Body Part</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-[400px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={bodyPartData} margin={{ top: 5, right: 30, left: 20, bottom: 30 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="part" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="count" name="Injuries" fill="#8884d8" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
+      <BodyPartInjuriesChart data={bodyPartsData} isLoading={loading} />
     </div>
   );
 };
