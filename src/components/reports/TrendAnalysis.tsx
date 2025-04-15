@@ -139,7 +139,7 @@ const TrendAnalysis = () => {
                 <h4 className="font-medium text-foreground">Analysis Insights:</h4>
                 <p>Strong positive correlation (r=0.92) between training load and injury risk.</p>
                 <p>Risk increases significantly when training load exceeds 90 arbitrary units.</p>
-                <p>Recommended action: Monitor athletes with consistently high training loads (>85 AU) for signs of fatigue.</p>
+                <p>Recommended action: Monitor athletes with consistently high training loads (&gt;85 AU) for signs of fatigue.</p>
               </div>
             </div>
           </TabsContent>
