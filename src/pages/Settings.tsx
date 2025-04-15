@@ -3,6 +3,9 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings as SettingsIcon } from 'lucide-react';
+import AccountSettings from '@/components/settings/AccountSettings';
+import NotificationSettings from '@/components/settings/NotificationSettings';
+import SystemPreferences from '@/components/settings/SystemPreferences';
 
 const Settings = () => {
   return (
@@ -23,57 +26,15 @@ const Settings = () => {
         </TabsList>
 
         <TabsContent value="account" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Account Settings</CardTitle>
-              <CardDescription>
-                Manage your account information and preferences
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <p className="text-muted-foreground">
-                  The account settings feature is coming soon. This will allow you to update your profile information, change your password, and manage access permissions.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <AccountSettings />
         </TabsContent>
 
         <TabsContent value="notifications" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>
-                Customize your notification settings
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <p className="text-muted-foreground">
-                  The notification preferences feature is coming soon. This will allow you to configure alerts for athlete risk levels, injury reports, and system updates.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <NotificationSettings />
         </TabsContent>
 
         <TabsContent value="system" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>System Preferences</CardTitle>
-              <CardDescription>
-                Configure system-wide settings and defaults
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <p className="text-muted-foreground">
-                  The system preferences feature is coming soon. This will allow you to customize risk threshold values, default display options, and data retention policies.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <SystemPreferences />
         </TabsContent>
       </Tabs>
     </div>

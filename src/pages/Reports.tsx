@@ -3,6 +3,9 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText } from 'lucide-react';
+import PerformanceReports from '@/components/reports/PerformanceReports';
+import HealthReports from '@/components/reports/HealthReports';
+import TrendAnalysis from '@/components/reports/TrendAnalysis';
 
 const Reports = () => {
   return (
@@ -23,57 +26,15 @@ const Reports = () => {
         </TabsList>
 
         <TabsContent value="performance" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Performance Reports</CardTitle>
-              <CardDescription>
-                Comprehensive athlete performance analytics
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <p className="text-muted-foreground">
-                  The performance reports feature is coming soon. This will provide detailed analytics on individual and team performance metrics over time.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <PerformanceReports />
         </TabsContent>
 
         <TabsContent value="health" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Health Reports</CardTitle>
-              <CardDescription>
-                Health and wellness tracking reports
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <p className="text-muted-foreground">
-                  The health reports feature is coming soon. This will allow you to generate detailed reports on athlete health metrics, recovery status, and injury trends.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <HealthReports />
         </TabsContent>
 
         <TabsContent value="trends" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Trend Analysis</CardTitle>
-              <CardDescription>
-                Long-term data analysis and pattern recognition
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <p className="text-muted-foreground">
-                  The trend analysis feature is coming soon. This will provide insights into performance patterns, risk factors, and predictive analytics for injury prevention.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <TrendAnalysis />
         </TabsContent>
       </Tabs>
     </div>
