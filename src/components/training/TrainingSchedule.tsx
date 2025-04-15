@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, FilterIcon, Play } from 'lucide-react';
+import { DayContent } from 'react-day-picker';
 
 // Mock data for training sessions
 const mockTrainingSessions = [
@@ -41,14 +42,29 @@ const TrainingSchedule = () => {
   };
 
   // Function to render dates with sessions
-  const renderDay = (day: Date) => {
+  const renderDay = (date: Date) => {
     const hasSession = mockTrainingSessions.some(
-      session => session.date.toDateString() === day.toDateString()
+      session => session.date.toDateString() === date.toDateString()
     );
     
-    return hasSession ? <div className="relative">
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></div>
-    </div> : null;
+    return hasSession ? (
+      <div className="relative">
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></div>
+      </div>
+    ) : null;
+  };
+
+  // Custom day content component
+  const CustomDayContent = (props: React.ComponentProps<typeof DayContent>) => {
+    // The date is available in props.date instead of props.day
+    const date = props.date;
+    
+    return (
+      <div>
+        {date.getDate()}
+        {renderDay(date)}
+      </div>
+    );
   };
 
   return (
@@ -83,12 +99,7 @@ const TrainingSchedule = () => {
               onSelect={setDate}
               className="border rounded-md p-3"
               components={{
-                DayContent: (props) => (
-                  <div>
-                    {props.day.getDate()}
-                    {renderDay(props.day)}
-                  </div>
-                )
+                DayContent: CustomDayContent
               }}
             />
           </div>
