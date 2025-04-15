@@ -1,4 +1,3 @@
-
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -13,10 +12,7 @@ const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Athletes = lazy(() => import("./pages/Athletes"));
 const AthleteProfile = lazy(() => import("./pages/AthleteProfile"));
 const Analytics = lazy(() => import("./pages/Analytics"));
-const Training = lazy(() => import("./pages/Training"));
 const Health = lazy(() => import("./pages/Health"));
-const Reports = lazy(() => import("./pages/Reports"));
-const Settings = lazy(() => import("./pages/Settings"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Loading fallback component
@@ -74,24 +70,9 @@ const App = () => (
                 <Analytics />
               </Suspense>
             } />
-            <Route path="training" element={
-              <Suspense fallback={<PageLoader />}>
-                <Training />
-              </Suspense>
-            } />
             <Route path="health" element={
               <Suspense fallback={<PageLoader />}>
                 <Health />
-              </Suspense>
-            } />
-            <Route path="reports" element={
-              <Suspense fallback={<PageLoader />}>
-                <Reports />
-              </Suspense>
-            } />
-            <Route path="settings" element={
-              <Suspense fallback={<PageLoader />}>
-                <Settings />
               </Suspense>
             } />
           </Route>

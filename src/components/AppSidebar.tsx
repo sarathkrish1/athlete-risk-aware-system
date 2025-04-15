@@ -4,11 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { 
   Activity, 
   Users, 
-  BarChart3, 
-  Calendar, 
-  Settings, 
+  BarChart3,
   HeartPulse,
-  FileText 
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -41,24 +38,9 @@ const navItems = [
     href: "/analytics" 
   },
   { 
-    title: "Training", 
-    icon: Calendar, 
-    href: "/training" 
-  },
-  { 
     title: "Health", 
     icon: HeartPulse, 
     href: "/health" 
-  },
-  { 
-    title: "Reports", 
-    icon: FileText, 
-    href: "/reports" 
-  },
-  { 
-    title: "Settings", 
-    icon: Settings, 
-    href: "/settings" 
   },
 ];
 
